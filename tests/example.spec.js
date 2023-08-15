@@ -1,19 +1,14 @@
 // @ts-check
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require("@playwright/test");
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
-
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+test("playwright-demo", async ({ page }) => {
+    await page.goto("http://todomvc.com/examples/react/");
+    await page.getByPlaceholder("What needs to be done?").fill("playwright-demo1");
+    await page.getByPlaceholder("What needs to be done?").press("Enter");
+    await expect(page.locator(".todo-list")).toContainText(["playwright-demo1"]);
+    await expect(page.locator(".todo-count")).toContainText(["1 item left"]);
+    await page.getByPlaceholder("What needs to be done?").fill("playwright-demo2");
+    await page.getByPlaceholder("What needs to be done?").press("Enter");
+    await expect(page.locator(".todo-list")).toContainText(["playwright-demo2"]);
+    await expect(page.locator(".todo-count")).toContainText(["2 items left"]);
 });
